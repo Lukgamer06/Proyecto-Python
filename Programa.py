@@ -161,19 +161,19 @@ while True:
                                             Total = Grados.PromedioTotalCarrerra(CreditosTot,SemestreTot)
                                             Año = Grados.PromedioAño(Total)
                                             Semestre = Grados.PromedioSemestre(Año)
-                                            Meses = Grados.PrimedioMes(Semestre)
+                                            Meses = Grados.PromedioMes(Semestre)
                                             PromedioCreditos=Grados.GuardarPromedios(Total,Año,Semestre,Meses)
                                             #Horas Libres
                                             Total = Grados.PromedioTotalCarrerra(HorasLibresTot,SemestreTot)
                                             Año = Grados.PromedioAño(Total)
                                             Semestre = Grados.PromedioSemestre(Año)
-                                            Meses = Grados.PrimedioMes(Semestre)
+                                            Meses = Grados.PromedioMes(Semestre)
                                             PromedioHorasLibres=Grados.GuardarPromedios(Total,Año,Semestre,Meses)
                                             print(f"El promedio de creditos por carrera es: {PromedioCreditos[0]}")
                                             print(f"El promedio de creditos por Año es: {PromedioCreditos[1]}")
                                             print(f"El promedio de creditos por Semestre es: {PromedioCreditos[2]}")
                                             print(f"El promedio de creditos por carrera es: {PromedioCreditos[3]}")
-                                            print("_"+40)
+                                            print("_"*40)
                                             print(f"El promedio de Horas Libres por carrera es: {PromedioHorasLibres[0]}")
                                             print(f"El promedio de Horas Libres por Año es: {PromedioHorasLibres[1]}")
                                             print(f"El promedio de Horas Libres por Semestre es: {PromedioHorasLibres[2]}")
@@ -188,9 +188,11 @@ while True:
                             elif SubMenu == 3:
                                 time.sleep(2)
                                 os.system('cls' if os.name == 'nt' else 'clear')
+                                try: Facultad = str (input("Inserta el nombre de la facultad: "))
+                                except ValueError: continue
                                 try: Carrera = str(input("Inserta el nombre de la carrera que deseas eliminar: "))
                                 except ValueError: continue
-                                Grados.EliminarCarrera(Carrera)
+                                Grados.EliminarCarrera(Facultad,Carrera)
                                 time.sleep(5)
                                 os.system('cls' if os.name == 'nt' else 'clear')
                             #Volviendo al Menu Principal
@@ -309,7 +311,7 @@ while True:
                                 try: rta=str(input("Quieres salir? (Y/N): "))
                                 except ValueError: print("Responde con 'Y' o 'N'") ; continue
                                 if  rta.upper() == "N": continue
-                                elif rta.upper() == "Y": time.sleep(2); os.system('cls' if os.name == 'nt' else 'clear'); break
+                                elif rta.upper() == "Y": time.sleep(2); os.system('cls' if os.name == 'nt' else 'clear')
                                 else: print("Opción no valida")
                             #Crear Noticia
                             elif MenuNoticias == 2:
@@ -350,39 +352,44 @@ while True:
                     elif MenuPrincipal  == 4:
                         time.sleep(2)
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        print("Que usuario deseas eliminar?")
-                        print("1. Eliminar esta cuenta")
-                        print("2. Eliminar otra cuenta")
-                        print("3. Volver al Menu Principal")
-                        try: rta=int(input("Inserta la opción: "))
-                        except ValueError: print("Ingresa el numero de la opcion que deseas escoger") ; continue
-                        #Eliminar la cuenta actual
-                        if rta == 1:
-                            time.sleep(2)
-                            os.system('cls' if os.name == 'nt' else 'clear')
-                            print("Accediendo a Eliminar cuenta propia...")
-                            time.sleep(2)
-                            Recontraseña=input("Inserta nuevamente tu contraseña: ")
-                            #Por si insertan mal la entrada
-                            try: Eliminar=str(input("Estas seguro de eliminar tu cuenta? (Y/N): "))
-                            except ValueError: print("Responde con 'Y' o 'N'") ; continue
-                            if Eliminar.upper() == "Y": Login_register.eliminarpropio(Usuario,Contraseña,Recontraseña);time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear'); break
-                            elif  Eliminar.upper() == "N": print("Cancelando") ;time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear') ; break
-                            else: print("Respuesta invalida")
-                        #Eliminar otra cuenta
-                        elif rta == 2:
-                            time.sleep(2)
-                            os.system('cls' if os.name == 'nt' else 'clear')
-                            print("Accediendo a Eliminar otra cuenta...")
-                            time.sleep(2)
-                            print("Para eliminar una cuenta necesito que me insertes el nombre de usuario\n","Y la contraseña con la que te volviste administrador")
-                            Usuario=input("Inserta el nombre de usuario: ")
-                            AdminContraseña=input("Inserta la contraseña de Administrador: ")
-                            try: Eliminar=str(input("Estas seguro de eliminar la cuenta? (Y/N): "))
-                            except ValueError: print("Responde con 'Y' o 'N'") ; continue
-                            if Eliminar.upper() == "Y": Login_register.eliminarOtro(Usuario,AdminContraseña);time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear'); break
-                            elif Eliminar.upper() == "N": print("Cancelando");time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear') ; break
-                            else: print("Respuesta invalida")
+                        while True:
+                            print("Que usuario deseas eliminar?")
+                            print("1. Eliminar esta cuenta")
+                            print("2. Eliminar otra cuenta")
+                            print("3. Volver al Menu Principal")
+                            try: rta=int(input("Inserta la opción: "))
+                            except ValueError: print("Ingresa el numero de la opcion que deseas escoger") ; continue
+                            #Eliminar la cuenta actual
+                            if rta == 1:
+                                time.sleep(2)
+                                os.system('cls' if os.name == 'nt' else 'clear')
+                                print("Accediendo a Eliminar cuenta propia...")
+                                time.sleep(2)
+                                Recontraseña=input("Inserta nuevamente tu contraseña: ")
+                                #Por si insertan mal la entrada
+                                try: Eliminar=str(input("Estas seguro de eliminar tu cuenta? (Y/N): "))
+                                except ValueError: print("Responde con 'Y' o 'N'") ; continue
+                                if Eliminar.upper() == "Y": Login_register.eliminarpropio(Usuario,Contraseña,Recontraseña);time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear'); break
+                                elif  Eliminar.upper() == "N": print("Cancelando") ;time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear') ; break
+                                else: print("Respuesta invalida")
+                            #Eliminar otra cuenta
+                            elif rta == 2:
+                                time.sleep(2)
+                                os.system('cls' if os.name == 'nt' else 'clear')
+                                print("Accediendo a Eliminar otra cuenta...")
+                                time.sleep(2)
+                                print("Para eliminar una cuenta necesito que me insertes el nombre de usuario\n","Y la contraseña con la que te volviste administrador")
+                                Usuario=input("Inserta el nombre de usuario: ")
+                                AdminContraseña=input("Inserta la contraseña de Administrador: ")
+                                try: Eliminar=str(input("Estas seguro de eliminar la cuenta? (Y/N): "))
+                                except ValueError: print("Responde con 'Y' o 'N'") ; continue
+                                if Eliminar.upper() == "Y": Login_register.eliminarOtro(Usuario,AdminContraseña);time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear')
+                                elif Eliminar.upper() == "N": print("Cancelando");time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear')
+                                else: print("Respuesta invalida")
+                            #Volver
+                            elif rta == 3: print("Regresando al Menu Principal...");time.sleep (2);os.system('cls' if os.name == 'nt' else 'clear'); break
+                            #Por si se equivocan
+                            else: print("Opción no válida")
                     #Cerrar Sesion
                     elif  MenuPrincipal == 5: print("Cerrando sesion...");time.sleep(5);os.system('cls' if os.name == 'nt' else 'clear'); break
                     #Opcion no valida
@@ -478,23 +485,23 @@ while True:
                                     Total = Grados.PromedioTotalCarrerra(CreditosTot,SemestreTot)
                                     Año = Grados.PromedioAño(Total)
                                     Semestre = Grados.PromedioSemestre(Año)
-                                    Meses = Grados.PrimedioMes(Semestre)
+                                    Meses = Grados.PromedioMes(Semestre)
                                     PromedioCreditos=Grados.GuardarPromedios(Total,Año,Semestre,Meses)
                                     #Horas Libres
                                     Total = Grados.PromedioTotalCarrerra(HorasLibresTot,SemestreTot)
                                     Año = Grados.PromedioAño(Total)
                                     Semestre = Grados.PromedioSemestre(Año)
-                                    Meses = Grados.PrimedioMes(Semestre)
+                                    Meses = Grados.PromedioMes(Semestre)
                                     PromedioHorasLibres=Grados.GuardarPromedios(Total,Año,Semestre,Meses)
                                     print(f"El promedio de creditos por carrera es: {PromedioCreditos[0]}")
                                     print(f"El promedio de creditos por Año es: {PromedioCreditos[1]}")
                                     print(f"El promedio de creditos por Semestre es: {PromedioCreditos[2]}")
-                                    print(f"El promedio de creditos por carrera es: {PromedioCreditos[3]}")
-                                    print("_"+40)
+                                    print(f"El promedio de creditos por mes es: {PromedioCreditos[3]}")
+                                    print("_"*40)
                                     print(f"El promedio de Horas Libres por carrera es: {PromedioHorasLibres[0]}")
                                     print(f"El promedio de Horas Libres por Año es: {PromedioHorasLibres[1]}")
                                     print(f"El promedio de Horas Libres por Semestre es: {PromedioHorasLibres[2]}")
-                                    print(f"El promedio de Horas Libres por carrera es: {PromedioHorasLibres[3]}")
+                                    print(f"El promedio de Horas Libres por mes es: {PromedioHorasLibres[3]}")
                                     input("Pulsa Cualquier tecla para continuar...")
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                 #Volver al Menu Principal
