@@ -45,7 +45,7 @@ class General:
         with open(filename, 'w') as file:
             for line in lines:
                 linea = line.strip().split(";")
-                if linea[0] != Facultad and linea[1] != Carrera:
+                if linea[0] != Facultad or linea[1] != Carrera:
                     file.write(line)
 
 class Despedida:
@@ -134,7 +134,7 @@ class Noticias:
     def CrearNoticia(Titulo, Autor,Contenido):
         Fecha = General.ObtenerFechayHora()
         with open('Noticias.csv', 'a') as Noticia:
-            Noticia.write(f"{Titulo};{Autor},{Fecha};{Contenido}\n")
+            Noticia.write(f"{Titulo};{Autor};{Fecha};{Contenido}\n")
     #Programa leer Noticias
     def VerNoticia():
         try:
@@ -209,7 +209,7 @@ class Grados:
         fig, ax = plt.subplots(figsize=(10, 6))
         # Crear las barras apiladas horizontales
         base = np.zeros(len(categorias))
-        nombres_grupos = ['Completado','Sin Completar']
+        nombres_grupos = ['Sin Completar','Completado']
         colores = ['#008000', '#FF0000']  # Verdes y rojos
         for i, fila in enumerate(porcentajes):
             ax.barh(categorias, fila, left=base, label=nombres_grupos[i], color=colores[i])
